@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    body {
+      font-family: "Great Vibes", cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      width: 80%;
+      font-size: 400%;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      margin: 0 2%; /* margen horizontal del 2% del viewport */
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #si {
+      background-color: #4caf50; /* Verde */
+      color: white;
+    }
+
+    #no {
+      background-color: #f44336; /* Rojo */
+      color: white;
+    }
+    #rosas {
+      width: 10%;
+      height: 20%;
+    }
+    #gatos {
+      margin-top: 2%;
+      width: 30%;
+      height: 40%;
+      opacity: 0; /* Establece la opacidad inicial en 0 para que las imágenes no sean visibles al principio */
+      transition: opacity 1s ease; /* Agrega una transición suave para la propiedad de opacidad */
+    }
+  </style>
+  <head></head>
+  <body>
+    <h1>
+      Mi amor, ¿me darías el grandísimo<br />
+      placer de ser mi cita para San Valentín?
+    </h1>
+    <div class="button-container">
+      <button id="si" onclick="accept()">SÍ</button>
+      <button id="no" onmouseover="moveRandom()">NO :(</button>
+    </div>
+  </body>
+  <script>
+    function moveRandom() {
+      let button = document.getElementById("no");
+      let randomX = Math.random() * (window.innerWidth - button.offsetWidth);
+      let randomY = Math.random() * (window.innerHeight - button.offsetHeight);
+      button.style.position = "absolute";
+      button.style.left = randomX + "px";
+      button.style.top = randomY + "px";
+      let yesButton = document.getElementById("si");
+      var currentWidth = parseFloat(window.getComputedStyle(yesButton).width); // Obtener el ancho actual como número
+      var currentHeight = parseFloat(window.getComputedStyle(yesButton).height); // Obtener la altura actual como número
+      var newWidth = currentWidth + 50; // Aumenta el ancho en un 10%
+      var newHeight = currentHeight + 50; // Aumenta la altura en un 10%
+      yesButton.style.width = newWidth + "px";
+      yesButton.style.height = newHeight + "px";
+      var currentFontSize = parseFloat(
+        window.getComputedStyle(yesButton).fontSize,
+      ); // Obtener el tamaño de la fuente actual como número
+      var newFontSize = currentFontSize + 50; // Aumentar el tamaño de la fuente en un 10%
+      yesButton.style.fontSize = newFontSize + "px";
+    }
+
+    async function accept() {
+      document.body.innerHTML = "";
+      var newText = document.createElement("h1");
+      newText.textContent = "Muy bien mi amor te amo mucho";
+      document.body.appendChild(newText); // Agrega el texto al body
+      // Crea un nuevo elemento de imagen
+      var rosas = document.createElement("img");
+      rosas.id = "rosas";
+      rosas.src = "./rosas.png"; // URL de la imagen
+      document.body.appendChild(rosas); // Agrega la imagen al body
+
+      for (let i = 1; i <= 7; i++) {
+        let newImage = document.createElement("img");
+        newImage.id = "gatos";
+        newImage.src = "./" + i + ".jpg"; // URL de la imagen
+        document.body.appendChild(newImage); // Agrega la imagen al body
+        await sleep(500);
+        newImage.style.opacity = 1; // Hacer que la nueva imagen sea visible
+        await sleep(3000);
+        newImage.style.opacity = 0;
+        await sleep(500);
+        newImage.remove();
+        i == 7 ? (i = 0) : "";
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+    }
+  </script>
+</html>
